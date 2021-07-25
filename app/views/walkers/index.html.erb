@@ -1,35 +1,60 @@
-    <p class="lead text-center">Filter by Area<p>
-
-
-    <nav class="nav navbar-nav">
-    <ul class="nav justify-content-center nav-tabs">
+<p class="lead text-center">Filter by Area
+  <p>
+    <nav class="nav navbar-nav mb-3">
+      <ul class="nav justify-content-center nav-tabs">
         <% Area.all.each do |area| %>
           <li class="nav-item mx-2">
-          <% if params[:area] == area.name %>
-            <%= link_to area.name, walkers_path(area: area.name), class: "nav-link active p-2" %>
-          <% else %>
-            <%= link_to area.name, walkers_path(area: area.name), class: "link nav-link p-2" %>
-          <% end%>
+            <% if params[:area] == area.name %>
+              <%= link_to area.name, walkers_path(area: area.name), class: "nav-link active p-2" %>
+            <% else %>
+              <%= link_to area.name, walkers_path(area: area.name), class: "link nav-link p-2" %>
+            <% end%>
           </li>
         <% end %>
-    </ul>
+      </ul>
     </nav>
-
-<% if @walkers.count == 0 %>
-  <h1 class="lead text-center mt-5">Sorry, there are currently no dog walkers registered for this area.</h1>
-<% end %>
-<% random = 1 %>
-<% @walkers.each do |walker| %>
-  <div>
-
-    <img src="https://picsum.photos/200?random=<%= random %>" class="profile-img"/>
-
-    <h2>
-      <span><%= link_to walker.first_name + " " + walker.last_name, walker_path(walker) %></span>
-    </h2>
-    <h3>
-      <%= walker.city %>
-    </h3>
-  </div>
-  <% random = random + 1 %>
-<% end %>
+    <% if @walkers.count == 0 %>
+      <h1 class="lead text-center mt-5">Sorry, there are currently no dog walkers registered for this area.</h1>
+    <% end %>
+    <% random = 1 %>
+    <% @walkers.each do |walker| %>
+      <%if walker.reviews.blank?%>
+        <%average_review = 0%>
+      <% else %>
+        <% average_review = walker.reviews.average(:rating).round(2) %>
+      <% end %>
+      <div class="card mb-3" style="max-width: 540px;">
+        <div class="row g-0">
+          <div class="col-md-4">
+            <img src="https://picsum.photos/200?random=<%= random %>" class="img-fluid rounded-start" alt="profile-image">
+          </div>
+          <div class="col-md-8">
+            <div class="card-body">
+              <h5 class="card-title">
+                <span><%= link_to walker.first_name + " " + walker.last_name, walker_path(walker) %></span>
+              </h5>
+              <p class="card-text"><%= walker.city %></p>
+              <div>
+                <% if walker.reviews.count == 0 %>
+                  <span>This user has no reviews yet.</span>
+                <% else %>
+                  <span class="average-review-rating" data-score="<%= average_review %>"></span>
+                  <span>(<%= walker.reviews.count  %>)</span>
+                <% end %>
+              </div>
+              <p class="card-text"><small class="text-muted">Last updated <%= time_ago_in_words(walker.created_at) %> ago</small></p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <% random = random + 1 %>
+    <% end %>
+    <script>
+      $('.average-review-rating').raty({
+        readOnly: true,
+          path: '/assets/',
+        score: function() {
+          return $(this).attr('data-score');
+        },
+      });
+    </script>
