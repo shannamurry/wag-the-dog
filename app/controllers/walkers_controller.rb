@@ -1,4 +1,5 @@
 class WalkersController < ApplicationController
+  rescue_from ActiveRecord::RecordNotFound, with: :catch_not_found
   before_action :find_walker, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_user!, only: [:new, :edit]
 
@@ -60,5 +61,11 @@ class WalkersController < ApplicationController
 
   def find_walker
     @walker = Walker.find(params[:id])
+  end
+
+  def catch_not_found(e)
+    Rails.logger.debug("We had a not found exception.")
+    flash.alert = e.to_s
+    redirect_to walkers_path
   end
 end
