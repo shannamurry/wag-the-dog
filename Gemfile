@@ -17,7 +17,6 @@ gem 'sprockets-rails', '~> 3.2', '>= 3.2.2'
 gem 'simple_form', '~> 5.1'
 gem 'ratyrate', '~> 1.2.2.alpha'
 gem 'jquery-rails', '~> 4.4'
-
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
