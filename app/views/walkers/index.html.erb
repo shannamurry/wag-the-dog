@@ -1,3 +1,20 @@
+    <p class="lead text-center">Filter by Area<p>
+
+
+    <nav class="nav navbar-nav">
+    <ul class="nav justify-content-center nav-tabs">
+        <% Area.all.each do |area| %>
+          <li class="nav-item mx-2">
+          <% if params[:area] == area.name %>
+            <%= link_to area.name, walkers_path(area: area.name), class: "nav-link active p-2" %>
+          <% else %>
+            <%= link_to area.name, walkers_path(area: area.name), class: "link nav-link p-2" %>
+          <% end%>
+          </li>
+        <% end %>
+    </ul>
+    </nav>
+
 <% if @walkers.count == 0 %>
   <h1 class="lead text-center mt-5">Sorry, there are currently no dog walkers registered for this area.</h1>
 <% end %>

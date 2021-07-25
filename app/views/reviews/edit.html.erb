@@ -1,0 +1,20 @@
+<h1>Edit Review</h1>
+
+<% if current_user.id == @review.user_id %>
+<%= simple_form_for([@walker, @review]) do |f| %>
+<div id="rating-form">
+  <label for="">Rating </label>
+</div>
+  <%= f.input :comment %>
+  <%= f.button :submit, class: "btn-primary" %>
+<% end %>
+<% else %>
+<h1 class="lead">Sorry, you cannot other users reviews.</h1>
+<% end %>
+
+<script>
+$('#rating-form').raty({
+  path: '/assets/',
+  scoreName: 'review[rating]'
+});
+</script>
