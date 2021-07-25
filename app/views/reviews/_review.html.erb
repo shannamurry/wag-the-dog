@@ -1,0 +1,21 @@
+<div>
+<div class="review-rating" data-score="<%= review.rating %>">
+</div>
+<p>
+  <%=review.comment%>
+</p>
+<div>
+  <%= time_ago_in_words(review.created_at) %>
+  <span> ago</span>
+</div>
+</div>
+
+<div>
+<% if user_signed_in? %>
+
+<% if current_user.id == review.user_id%>
+  <%= link_to "Edit", edit_walker_review_path(review.walker, review) %>
+  <%= link_to "Delete", walker_review_path(review.walker, review), method: :delete, data: { confirm: "Are you sure?" } %>
+<% end%>
+<% end%>
+</div>

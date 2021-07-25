@@ -1,16 +1,22 @@
 class WalkersController < ApplicationController
   before_action :find_walker, only: [:show, :edit, :update, :destroy]
+  before_action :authenticate_user!, only: [:new, :edit]
 
   def index
     if params[:area].blank?
-      @walkers = Walker.all
+      @walkers = Walker.all.order("created_at DESC")
     else
       @area_id = Area.find_by(name: params[:area]).id
-      @walkers = Walker.where(:area_id => @area_id)
+      @walkers = Walker.where(:area_id => @area_id).order("created_at DESC")
     end
   end
 
   def show
+    if @walker.reviews.blank?
+      @average_review = 0
+    else
+      @average_review = @walker.reviews.average(:rating).round(2)
+    end
   end
 
   def new

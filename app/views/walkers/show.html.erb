@@ -1,15 +1,51 @@
   <img src="https://picsum.photos/200" alt="">
 
   <h2><%= @walker.first_name + " " + @walker.last_name %></h2>
-  <h2><%= @walker.area.name + " - " + @walker.city %></h2>
-  <h2><%= @walker.phone %></h2>
-  <h2><%= @walker.email %></h2>
+  <h3><%= @walker.area.name + " - " + @walker.city %></h3>
+  <h4><%= @walker.phone %></h4>
+  <h4><%= @walker.email %></h4>
+  <h2>Average Rating</h2>
+  <div>
+  <span class="average-review-rating"data-score="<%= @average_review %>">
+  </span>
+  <span>(<%= @walker.reviews.count %>)</span>
+  </div>
+
   <p><%= @walker.details %></p>
 
+  <%= render @walker.reviews.order("created_at DESC") %>
+
+<div>
   <%= link_to "Back",  walkers_path %>
   <% if user_signed_in? %>
   <% if current_user.id === @walker.user_id %>
     <%= link_to 'Edit', edit_walker_path %>
     <%= link_to 'Delete', walker_path(@walker), method: :delete, data: { confirm: "Are you sure? "} %>
+    <% else %>
+    <%= link_to "Write a review", new_walker_review_path(@walker) %>
   <% end %>
   <% end %>
+</div>
+
+<script>
+  $('.review-rating').raty({
+    readOnly: true,
+    score: function() {
+      return $(this).attr('data-score');
+    },
+    path: '/assets/'
+  });
+
+</script>
+
+<script>
+  $('.average-review-rating').raty({
+    readOnly: true,
+      path: '/assets/',
+    score: function() {
+      return $(this).attr('data-score');
+    },
+  });
+
+</script>
+
