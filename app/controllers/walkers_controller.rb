@@ -9,6 +9,12 @@ class WalkersController < ApplicationController
       @area_id = Area.find_by(name: params[:area]).id
       @walkers = Walker.where(:area_id => @area_id).order("created_at DESC")
     end
+
+    # if @walker.reviews.blank?
+    #   @average_review = 0
+    # else
+    #   @average_review = @walker.reviews.average(:rating).round(2)
+    # end
   end
 
   def show
