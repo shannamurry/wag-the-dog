@@ -14,6 +14,11 @@
 
  @import "bootstrap";
 
+ body {
+   font-family: 'Raleway', sans-serif;
+   padding-bottom: 50px;
+ }
+
 a {
   text-decoration: none;
 };
@@ -25,6 +30,7 @@ nav a {
 .card {
   width: 80%;
   margin: 0 auto;
+  box-shadow: 2px 2px 3px #aaa;
 }
 
 .card:nth-child(even) img {
@@ -39,4 +45,37 @@ nav a {
 
 .active {
   font-weight: 900;
+}
+
+.contact-info {
+  margin-left: 10px;
+  text-align: right;
+}
+
+.flex-item {
+  box-shadow: 2px 2px 3px #aaa;
+}
+
+.review-card {
+  box-shadow: 1px 1px 3px #aaa;
+  padding: 5px;
+}
+
+.show-layout {
+  max-width: 80%;
+  margin: 0 auto;
+}
+
+.show-bottom {
+  max-width: 80%;
+  margin: 0 auto;
+  margin-bottom: 10px;
+}
+
+.reviews {
+  width: 300px;
+}
+
+.details {
+  width: 50%;
 }

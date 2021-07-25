@@ -1,32 +1,39 @@
-  <img src="https://picsum.photos/200" alt="">
-
-  <h2><%= @walker.first_name + " " + @walker.last_name %></h2>
-  <h3><%= @walker.area.name + " - " + @walker.city %></h3>
-  <h4><%= @walker.phone %></h4>
-  <h4><%= @walker.email %></h4>
-  <h2>Average Rating</h2>
-  <div>
-  <span class="average-review-rating"data-score="<%= @average_review %>">
-  </span>
-  <span>(<%= @walker.reviews.count %>)</span>
+<div class="d-flex justify-content-between align-items-end mb-3 show-layout">
+  <div class="flex-item">
+    <img src="https://picsum.photos/300" alt="">
   </div>
-
-  <p><%= @walker.details %></p>
-
-  <%= render @walker.reviews.order("created_at DESC") %>
-
-<div>
+  <div class="contact-info">
+    <h1><%= @walker.first_name + " " + @walker.last_name %></h1>
+    <div>
+      <span class="average-review-rating"data-score="<%=  @average_review %>">
+      </span>
+      <span>(<%= @walker.reviews.count %>)</span>
+    </div>
+    <br/>
+    <h2><%= @walker.area.name + " - " + @walker.city %></h2>
+    <h3><%= @walker.phone %></h3>
+    <h3><%= @walker.email %></h3>
+  </div>
+</div>
+<div class="d-flex justify-content-between show-bottom">
+  <div class="reviews">
+    <%= render @walker.reviews.order("created_at DESC") %>
+  </div>
+  <div class="details">
+    <p><%= @walker.details %></p>
+  </div>
+</div>
+<div class="text-center">
   <%= link_to "Back",  walkers_path %>
   <% if user_signed_in? %>
-  <% if current_user.id === @walker.user_id %>
-    <%= link_to 'Edit', edit_walker_path %>
-    <%= link_to 'Delete', walker_path(@walker), method: :delete, data: { confirm: "Are you sure? "} %>
+    <% if current_user.id === @walker.user_id %>
+      <%= link_to 'Edit', edit_walker_path %>
+      <%= link_to 'Delete', walker_path(@walker), method: :delete, data: { confirm: "Are you sure? "} %>
     <% else %>
-    <%= link_to "Write a review", new_walker_review_path(@walker) %>
-  <% end %>
+      <%= link_to "Write a review", new_walker_review_path(@walker) %>
+    <% end %>
   <% end %>
 </div>
-
 <script>
   $('.review-rating').raty({
     readOnly: true,
@@ -35,9 +42,7 @@
     },
     path: '/assets/'
   });
-
 </script>
-
 <script>
   $('.average-review-rating').raty({
     readOnly: true,
@@ -46,6 +51,4 @@
       return $(this).attr('data-score');
     },
   });
-
 </script>
-
