@@ -1,0 +1,15 @@
+  <img src="https://picsum.photos/200" alt="">
+
+  <h2><%= @walker.first_name + " " + @walker.last_name %></h2>
+  <h2><%= @walker.area.name + " - " + @walker.city %></h2>
+  <h2><%= @walker.phone %></h2>
+  <h2><%= @walker.email %></h2>
+  <p><%= @walker.details %></p>
+
+  <%= link_to "Back",  walkers_path %>
+  <% if user_signed_in? %>
+  <% if current_user.id === @walker.user_id %>
+    <%= link_to 'Edit', edit_walker_path %>
+    <%= link_to 'Delete', walker_path(@walker), method: :delete, data: { confirm: "Are you sure? "} %>
+  <% end %>
+  <% end %>

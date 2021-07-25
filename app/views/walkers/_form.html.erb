@@ -1,0 +1,10 @@
+<%= simple_form_for @walker, :html => { :multipart => true } do |f| %>
+  <%= select_tag(:area_id, options_for_select(@areas), :prompt => "Select an area") %>
+  <%= f.input :first_name, label: "First Name" %>
+  <%= f.input :last_name, label: "Last Name" %>
+  <%= f.input :phone %>
+  <%= f.input :email %>
+  <%= f.input :city %>
+  <%= f.input :details %>
+  <%= f.submit "Submit", class: "btn-primary" %>
+<% end%>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>WagTheDog</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" integrity="sha384-+YQ4JLhjyBLPDQt//I+STsc9iw4uQqACwlvpslubQzn4u2UU2UFM80nGisd026JF" crossorigin="anonymous"></script>
+  </head>
+
+  <body>
+    <div class="container">
+
+ <nav class="navbar navbar-dark bg-dark">
+
+      <div class="nav navbar-header">
+        <%= link_to "Wag the Dog", root_path, class: "navbar-brand nav-item nav-link" %>
+
+        <% if user_signed_in? %>
+          <% if current_user.walkers.length === 0 %>
+          <li class="nav-item nav-link"><%= link_to "Post Services", new_walker_path %></li>
+          <% end %>
+        <% end %>
+      </div>
+
+      <ul class="nav">
+        <% if user_signed_in? %>
+          <li class="nav-item nav-link"><%= link_to "Sign Out", destroy_user_session_path, method: :delete %></li>
+        <% else %>
+          <li class="nav-item nav-link"><%= link_to "Sign Up", new_user_registration_path %></li>
+          <li class="nav-item nav-link"><%= link_to "Sign In", new_user_session_path %></li>
+        <% end %>
+      </ul>
+    </nav>
+
+    <p class="notice"><%= notice %></p>
+    <p class="alert"><%= alert %></p>
+
+    <p class="lead text-center">Filter by Area<p>
+
+    <nav class="nav navbar-nav">
+    <ul class="nav justify-content-center nav-tabs">
+        <% Area.all.each do |area| %>
+          <li class="nav-item mx-2">
+          <% if params[:area] == area.name %>
+            <%= link_to area.name, walkers_path(area: area.name), class: "nav-link active p-2" %>
+          <% else %>
+            <%= link_to area.name, walkers_path(area: area.name), class: "link nav-link p-2" %>
+          <% end%>
+          </li>
+        <% end %>
+    </ul>
+    </nav>
+
+    <%= yield %>
+  </div>
+  </body>
+</html>

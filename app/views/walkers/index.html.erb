@@ -1,0 +1,18 @@
+<% if @walkers.count == 0 %>
+  <h1 class="lead text-center mt-5">Sorry, there are currently no dog walkers registered for this area.</h1>
+<% end %>
+<% random = 1 %>
+<% @walkers.each do |walker| %>
+  <div>
+
+    <img src="https://picsum.photos/200?random=<%= random %>" class="profile-img"/>
+
+    <h2>
+      <span><%= link_to walker.first_name + " " + walker.last_name, walker_path(walker) %></span>
+    </h2>
+    <h3>
+      <%= walker.city %>
+    </h3>
+  </div>
+  <% random = random + 1 %>
+<% end %>
