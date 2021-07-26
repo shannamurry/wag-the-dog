@@ -1,15 +1,8 @@
-# FactoryBot.define do
-#   factory :user do
-#     email { Faker::Internet.email }
-#     password { "password" }
-#   end
-# end
-
 FactoryBot.define do
-  factory :user do
+  factory :review do
     email { Faker::Internet.email }
-    password { "password" }
-    # password_confirmation { "password" }
-    # confirmed_at { Date.today }
+    comment { "password" }
+    association :user
+    association :walker
   end
 end
